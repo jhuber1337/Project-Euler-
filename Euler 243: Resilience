@@ -1,0 +1,33 @@
+import math
+
+def is_prime(x):
+  prime = True;
+  for i in range(2,math.floor(x**0.5) + 1):
+    if x%i == 0:
+      prime = False
+  return(prime)
+
+i = 2
+factors = [2]
+for t in range(3,1000):
+  if(is_prime(t)):
+    i *= t
+    factors.append(t)
+  else:
+    continue
+  
+  totient = i
+  for j in factors:
+    totient *= (1 - 1/j)
+  #cracks = 0
+  #for j in range(2,i):
+  #  if(j%2 == 0 or j%3 == 0 or j%5 == 0 or j%7 == 0):
+  #    cracks += 1
+  #  elif(math.gcd(i,j) > 1):
+  #    cracks += 1
+  resiliance = totient/(i-1)
+  print(str(i) + ": " + str(resiliance) )
+  if(resiliance < 15499/94744):
+    print("SUCCESS")
+    #It's actually the one right BEFORE the success, times 4
+    quit()
