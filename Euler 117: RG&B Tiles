@@ -1,0 +1,12 @@
+total_tilations = [1, 1, 2]
+while len(total_tilations) < 100:
+  i = len(total_tilations)
+  count = 1
+  for j in range (0,i-1):
+    count += total_tilations[j]
+  for j in range (0,i-2):
+    count += total_tilations[j]
+  for j in range (0,i-3):
+    count += total_tilations[j]
+  total_tilations.append(count)
+print(total_tilations[50])
