@@ -1,0 +1,27 @@
+import math 
+
+def get_efficacy(investment):
+  win_increase = math.log(1+2*investment, 10)
+  lose_increase = math.log(1-investment, 10)
+  win_gain = win_increase - lose_increase
+  hits_needed = math.ceil((9 - lose_increase * 1000)/win_gain)
+  return(hits_needed)
+
+#Find optimal amount to bet
+investment = 0.5
+investment_incriment = 0.25
+for i in range (1,50):
+  efficacy = get_efficacy(investment)
+  print("--" + str(investment+investment_incriment) + " (" + str(get_efficacy(investment+investment_incriment)) + ")")
+  print("--" + str(investment-investment_incriment) + " (" + str(get_efficacy(investment-investment_incriment)) + ")")
+  if(get_efficacy(investment+investment_incriment) < efficacy):
+    investment += investment_incriment
+  elif(get_efficacy(investment-investment_incriment) < efficacy):
+    investment -= investment_incriment
+  investment_incriment *= 0.5
+  print(str(investment) + " (" + str(get_efficacy(investment)) + ")")
+  
+win_chance = 0
+for i in range(get_efficacy(investment), 1001):
+  win_chance += 10**(math.log(math.factorial(1000), 10) - math.log(math.factorial(i), 10) - math.log(math.factorial(1000-i), 10) - 1000*math.log(2,10))
+print(win_chance)
