@@ -1,0 +1,32 @@
+import numpy
+import math
+
+def get_point_angle(x, y):
+  if(x == 0):
+    if(y == 0):
+      return("NaN")
+    angle = 180 - 90 * y / abs(y) #It SHOULD return NaN here
+  else:
+    angle = numpy.arctan(y / x) * 180 / numpy.pi
+    if(x < 0):
+      angle += 180
+  return(angle)
+
+triangle_count = 0
+with open("triangles.txt", 'r') as triangles:
+  for triangle in triangles:
+    t1x, t1y, t2x, t2y, t3x, t3y = triangle.split(",")
+    angle_1 = get_point_angle(int(t1x), int(t1y))
+    angle_2 = get_point_angle(int(t2x), int(t2y))
+    angle_3 = get_point_angle(int(t3x), int(t3y))
+    
+    contained = True
+    if (angle_2 - angle_1) % 360 < 180 and (angle_3 - angle_1) % 360 < 180:
+      contained = False
+    if (angle_3 - angle_2) % 360 < 180 and (angle_1 - angle_2) % 360 < 180:
+      contained = False
+    if (angle_1 - angle_3) % 360 < 180 and (angle_2 - angle_3) % 360 < 180:
+      contained = False
+    if(contained):
+      triangle_count += 1
+print(triangle_count)
