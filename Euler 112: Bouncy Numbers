@@ -1,0 +1,18 @@
+target_ratio = 0.99
+bouncy_count = 0
+target = 10
+while bouncy_count < target_ratio * (target-1):
+  if target % 100000 == 0:
+    print("Progress " + str(target/100000))
+  target_str = str(target)
+  increasing = True
+  decreasing = True
+  for i in range(0, len(target_str) - 1):
+    if int(target_str[i]) > int(target_str[i+1]):
+      increasing = False
+    elif int(target_str[i]) < int(target_str[i+1]):
+      decreasing = False
+  if not increasing and not decreasing:
+    bouncy_count += 1
+  target += 1
+print(target - 1)
