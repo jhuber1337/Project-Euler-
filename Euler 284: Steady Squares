@@ -1,0 +1,53 @@
+import math
+
+total_steadiness = 0
+base = 14
+steps = 10000
+n = 7
+existing_count = 7
+total_steadiness += existing_count
+for l in range(1, steps+1):
+  if(l%200 == 0):
+    print(l)
+  new_place = base**l
+  if(l > 5):
+     potential_num_last_half = n % (base ** (math.floor(l * 0.5) + 2))
+  for i in range(0, base):
+    potential_num = n + i*new_place
+    if(l <= 5):
+      potential_num_last_half = potential_num % (base ** (math.floor(l * 0.5) + 2))
+    potential_num_first_half = potential_num - potential_num_last_half
+    end_square = potential_num_last_half**2 + 2*potential_num_first_half*potential_num_last_half 
+    if(end_square % (new_place*base) == potential_num):
+      n = potential_num
+      existing_count += i
+      if not i==0 and not l == steps:
+        total_steadiness += existing_count
+      break
+
+print(total_steadiness)
+print("---")
+
+n = 8
+existing_count = 8
+total_steadiness += existing_count
+for l in range(1, steps+1):
+  if(l%200 == 0):
+    print(l)
+  new_place = base**l
+  if(l > 5):
+     potential_num_last_half = n % (base ** (math.floor(l * 0.5) + 2))
+  for i in range(0, base):
+    potential_num = n + i*new_place
+    if(l <= 5):
+      potential_num_last_half = potential_num % (base ** (math.floor(l * 0.5) + 2))
+    potential_num_first_half = potential_num - potential_num_last_half
+    end_square = potential_num_last_half**2 + 2*potential_num_first_half*potential_num_last_half 
+    if(end_square % (new_place*base) == potential_num):
+      n = potential_num
+      existing_count += i
+      if not i==0 and not l == steps:
+        total_steadiness += existing_count
+      break
+
+print(total_steadiness + 1)
