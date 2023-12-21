@@ -1,0 +1,21 @@
+import math
+
+prime_list = [2]
+search_target = 2
+target_prime = 320000 #N means N'th prime. Modify this don't change any of the other stuff
+
+while len(prime_list) < target_prime:
+  while True:
+    search_target += 1
+    prime = True
+    factor = 2
+    while factor <= math.sqrt(search_target):
+      if search_target % factor == 0:
+        prime = False 
+        break
+      factor += 1
+    if(prime):
+      prime_list.append(search_target)
+      break
+
+print(search_target)
