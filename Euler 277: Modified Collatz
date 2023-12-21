@@ -1,0 +1,36 @@
+input = "UDDDUdddDDUDDddDdDddDDUDDdUUDd"
+n = 1
+k = 1
+for i in input[::-1]:
+  if(i == "D"):
+    n *= 3
+    k *= 3
+  if(i == "d"):
+    n *= 3
+    n += 1
+    n /= 2
+    k *= 3/2
+    while not n%1 == 0:
+      n += k
+    if not k%1 == 0:
+      k*=2
+  if(i == "U"):
+    n *= 3
+    n -= 2
+    n /= 4
+    k *= 3/4
+    while not n%1 == 0:
+      n += k
+    if not k%1 == 0:
+      k*=2
+    if not k%1 == 0:
+      k*=2
+  n=int(n)
+  k=int(k)
+  print(n)
+  print(k)
+  print("----")
+while n < 10**15:
+  n += k
+print("ANSWER:")
+print(n)
