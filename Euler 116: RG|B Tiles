@@ -1,0 +1,25 @@
+red_tilations = [1, 1, 2]
+while len(red_tilations) < 100:
+  i = len(red_tilations)
+  count = 1
+  for j in range (0,i-1):
+    count += red_tilations[j]
+  red_tilations.append(count)
+  
+blue_tilations = [1, 1, 1, 2]
+while len(blue_tilations) < 100:
+  i = len(blue_tilations)
+  count = 1
+  for j in range (0,i-2):
+    count += blue_tilations[j]
+  blue_tilations.append(count)
+  
+green_tilations = [1, 1, 1, 1, 2]
+while len(green_tilations) < 100:
+  i = len(green_tilations)
+  count = 1
+  for j in range (0,i-3):
+    count += green_tilations[j]
+  green_tilations.append(count)
+  
+print(red_tilations[50] + blue_tilations[50] + green_tilations[50] - 3)
