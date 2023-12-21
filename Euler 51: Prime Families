@@ -1,0 +1,82 @@
+#Use dictionary and add primes to all keys that represent prime families they could be placed it
+import math
+
+def get_families(prime_str, start_pos, digit_to_match):
+  family_list = []
+  for digit in range(len(prime_str)):
+    if digit > start_pos and prime_str[digit] == digit_to_match:
+      family_str = prime_str[:digit] + "x" + prime_str[(digit + 1):]
+      replaced_digit = int(prime_str[digit])
+      family_list.append((family_str, replaced_digit))
+      family_list = family_list + get_families(family_str, digit, digit_to_match)
+  return family_list
+    
+
+def add_prime_to_dict(prime_dict, prime):
+  prime_str = str(prime)
+  family_list = []
+  for digit in range(len(prime_str)):
+    family_str = prime_str[:digit] + "x" + prime_str[(digit + 1):]
+    family_list.append(family_str)
+    family_list = family_list + get_families(family_str, digit, prime_str[digit])
+  
+  for family in family_list:
+    if not family in prime_dict:
+      prime_dict[family] = [prime_str]
+    elif prime_str not in prime_dict[family]:
+      prime_dict[family].append(prime_str)
+      if(len(prime_dict[family]) == 8):
+        print(family)
+        print(prime_dict[family])
+        print(prime_dict[family][0])
+        exit()
+  return(prime_dict)
+
+prime_dict = dict()
+prime_list = [2]
+search_target = 2
+target_prime = 1001 #N means N'th prime. Modify this don't change any of the other stuff
+family_size = 8
+
+while True:#len(prime_list) < target_prime:
+  while True:
+    if search_target % 100000 == 0:
+      print("Progress: " + str(search_target / 100000))
+    if math.log10(search_target) % 1 == 0:
+      prime_dict.clear()
+      print("cleared")
+    search_target += 1
+    prime = True
+    factor = 2
+    while factor <= math.sqrt(search_target):
+      if search_target % factor == 0:
+        prime = False 
+        break
+      factor += 1
+    if(prime):
+      prime_list.append(search_target)
+      #prime_dict = add_prime_to_dict(prime_dict, search_target)prime_str = str(prime)
+      prime_str = str(search_target)
+      family_list = []
+      for digit in range(len(prime_str)):
+        family_str = prime_str[:digit] + "x" + prime_str[(digit + 1):]
+        replaced_digit = int(prime_str[digit])
+        family_list.append((family_str, replaced_digit))
+        family_list = family_list + get_families(family_str, digit, prime_str[digit])
+      
+      for family in family_list:
+        if not family[0] in prime_dict:
+          if family[1] <= (10 - family_size):
+            prime_dict[family[0]] = [prime_str]
+        elif prime_str not in prime_dict[family[0]]:
+          prime_dict[family[0]].append(prime_str)
+          if(len(prime_dict[family[0]]) == family_size):
+            print(family[0])
+            print(prime_dict[family[0]])
+            print(prime_dict[family[0]][0])
+            exit()
+          if(family[1] > 10 - family_size + len(prime_dict[family[0]])):
+            del prime_dict[family[0]]
+      break
+
+print("program over")
