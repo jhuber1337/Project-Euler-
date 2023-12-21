@@ -1,0 +1,32 @@
+import copy
+def get_value(current_section, options, exponent, number):
+  if(len(options) == 1):
+    if options[0] == ((current_section % (2**(exponent-1))) * 2):
+      return(number)
+    else:
+      return(0)
+  else:
+    segment_1 = -1;
+    value_1 = 0
+    value_0 = 0
+    segment_0 = (current_section % (2**(exponent-1))) * 2
+    if(len(options) >= exponent and not 0 in options): #This is for "looping"
+      number_0 = number * 2
+      segment_1 = (current_section % (2**(exponent-1))) * 2 + 1
+      number_1 = number * 2 + 1
+    else:
+      number_0 = number
+      number_1 = -1
+    if(segment_0 in options):
+      options_copy = copy.copy(options)
+      options_copy.remove(segment_0)
+      value_0 = get_value(segment_0, options_copy, exponent, number_0)
+    if(segment_1 in options):
+      options_copy = copy.copy(options)
+      options_copy.remove(segment_1)
+      value_1 = get_value(segment_1, options_copy, exponent, number_1)
+    return(value_0 + value_1)
+    
+exponent = 5
+options = range(0,2**exponent)
+print(get_value(0,options,exponent,0))
